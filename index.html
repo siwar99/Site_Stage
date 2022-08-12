@@ -1,21 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
+    <script src="script.js"></script>
     <title>Web Page</title>
 </head>
+
 <body>
     <div class="container">
         <div class="slide-controls">
-        <input type="radio" name="slider" id="config"checked>
-        <input type="radio" name="slider" id="printer">
-        <label for="config" class="slide config">DID Configuration </label>
-        <label for="printer" class="slide printer">MTC pretty printer </label>
-        <div class="slide-tab"></div>
-    </div>
-    
+            <input type="radio" name="slider" id="config" onclick="change()">
+            <input type="radio" name="slider" id="printer" onclick="change()">
+            <label for="config" class="slide config">DID Configuration </label>
+            <label for="printer" class="slide printer">MTC pretty printer </label>
+            <div class="slide-tab"></div>
+        </div>
+        <div class="container">
+            <div class="slide-controls">
+                <input type="radio" name="slider" id="MyF1">
+                <input type="radio" name="slider" id="MyF2">
+                <input type="radio" name="slider" id="MyF3">
+                <label for="MyF1" class="slide MyF1" function="click()"">MyF1 (PI9 diag resource v2.6.2) </label>
+                <label for=" MyF2" class="slide MyF2">MyF2 (PI11 diag resource v2.9.2) </label>
+                <label for="MyF3" class="slide MyF3">MyF3 (PI14 diag resource v3.2.4) </label>
+                <div class="slide-tab"></div>
+            </div>
 </body>
+
 </html>
