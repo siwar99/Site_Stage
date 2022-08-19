@@ -2,33 +2,46 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
-    <script src="script.js"></script>
-    <title>Web Page</title>
+  <title>MyF3 (PI15 diag resource v3.3.3)</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <link rel="stylesheet" href="index.css">
+  <script src="./did_database_v3.3.3.json"></script>
+  <script src="script.js"></script>
+  <!-- pour separer component,on a choisi le type text pour la template -->
+
+
 </head>
 
+
 <body>
-    <div class="container">
-        <div class="slide-controls">
-            <input type="radio" name="slider" id="config" onclick="change()">
-            <input type="radio" name="slider" id="printer" onclick="change()">
-            <label for="config" class="slide config">DID Configuration </label>
-            <label for="printer" class="slide printer">MTC pretty printer </label>
-            <div class="slide-tab"></div>
-        </div>
-        <div class="container">
-            <div class="slide-controls">
-                <input type="radio" name="slider" id="MyF1">
-                <input type="radio" name="slider" id="MyF2">
-                <input type="radio" name="slider" id="MyF3">
-                <label for="MyF1" class="slide MyF1" function="click()"">MyF1 (PI9 diag resource v2.6.2) </label>
-                <label for=" MyF2" class="slide MyF2">MyF2 (PI11 diag resource v2.9.2) </label>
-                <label for="MyF3" class="slide MyF3">MyF3 (PI14 diag resource v3.2.4) </label>
-                <div class="slide-tab"></div>
-            </div>
+  <div class="tab">
+    <button class="tablink_up" onclick="openPage(event, 'DID')">DID configuration</button>
+    <button class="tablink_up" onclick="openPage(event, 'MTC')">MTC pretty printer</button>
+  </div>
+  <div id="DID" class="tabcontent_up" style="display:none">
+    <div class="tab">
+      <button class="tablinks" onclick="openPI(event, 'PI9')">MyF1 (PI9 diag resource v2.6.2)</button>
+      <button class="tablinks" onclick="openPI(event, 'PI11')">MyF2 (PI11 diag resource v2.9.2)</button>
+      <button class="tablinks" onclick="openPI(event, 'PI14')">MyF3 (PI14 diag resource v3.2.4)</button>
+    </div>
+    <h1 >A-IVI2 Configuration DID list</h1>
+  </div>
+  
+  <div id="PI9" class="tabcontent"style="display:none">
+  </div>
+
+  <div id="PI11" class="tabcontent"style="display:none">
+  </div>
+
+  <div id="PI14" class="tabcontent"style="display:none">
+  </div>
+  </div>
+
+
+
 </body>
 
 </html>
