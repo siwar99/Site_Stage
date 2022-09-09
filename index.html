@@ -1,698 +1,190 @@
-<!DOCTYPE html>
-<html lang="en">
+  <!DOCTYPE html>
+  <html lang="en">
 
-<head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>A-IVI2 Configuration documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js">
+    <script rel="stylesheet" href="json-grid.css"></script>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>MyF3 (PI15 diag resource v3.3.3)</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./mtc_style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="JSONGrid.min.js"></script>
+    <script src="./tab.js"></script>
+    <script src="./mtcs.js"></script>
+   
+    <script src="./did_database_v2.6.2.js"></script>
+    <script src="./did_database_v2.9.2.js"></script>
+    <script src="./did_database_v3.2.4.js"></script>
+    <link rel="stylesheet" href="tabs.css">
 
-  <script src="vue.js"></script>
-  <script src="data.js"></script>
-  <script src="./script.js"></script>
-  <script src="./did_database_v2.9.2.js"></script>
-  <script src="./did_database_v3.2.4.js"></script>
-  <script src="did_database_v2.6.2.js"></script>
-  <link rel="stylesheet" href="index.css">
-  <link rel="stylesheet" href="data.css">
-
-
-
-
-
-</head>
-
-<body>
-
-
-  <div class="tab">
-    <button class="tablink_up" onclick="openPage(event, 'DID')">DID configuration</button>
-    <button class="tablink_up" onclick="openPage(event, 'MTC')">MTC pretty printer</button>
-  </div>
-
-  <div id="DID" class="tabcontent_up" style="display:none">
-    <div class="tab">
-      <button class="tablinks" onclick="openPI(event, 'PI9')">MyF1 (PI9 diag resource v2.6.2)</button>
-      <button class="tablinks">MyF2 (PI11 diag resource v2.9.2)</button>
-      <button class="tablinks">MyF3 (PI14 diag resource v3.2.4)</button>
+    <!-- component template -->
+    <script type="text/x-template" id="grid-template">
+      <table>
+    <thead>
+      <tr>
+        <th v-for="key in columns"
+        @click="sortBy(key)"
+        :class="{ active: sortKey == key }">
+          {{ key | capitalize }}
+          <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="entry in filteredHeroes">
+        <td v-for="key in columns">
+          {{entry[key]}}
+        </td>
+      </tr>
+    </tbody>
+      </table>
+    </script>
+    <script type="text/x-template" id="dropdown-template">
+      <div>
+    <button @click='toggleShow' class='anchor'>Select a VC conf id</button>
+    <div v-if='showMenu' class='menu'>
+      <div class='menu-item' v-for='item in this.items' @click='itemClicked(item)'>{{item}}</div>
     </div>
-    <h1>A-IVI2 Configuration DID list</h1>
+      </div>
+    </script>
+  </head>
 
-    <div id="PI9" class="tabcontent json-grid-element-container" style="display:none">
-      <div class="json-grid-element-container">
-        <span class="expander" data-target-id="table-40621"> [-] 59 items</span>
-        <table class="table" id="table-40621">
-          <tbody class>
-            <tr class>
-              <th class></th>
-              <th class>code</th>
-              <th class>features</th>
-              <th class>length</th>
-              <th class>name</th>
-              <th class>sessionAccess</th>
-            </tr>
+  <body>
 
-            <tr class>
-              <td class="number">
-                <span class="number">0</span>
-              </td>
-              <td class="table-wrapper object">
-                <span class="string">0x2000</span>
-              </td>
-              <td class="table-wrapper object">
-                <div class="json-grid-element-container">
-                  <span class="expander" data-target-id="table-3"> [-] 10 items </span>
-                  <table class="table" id="table-3">
-                    <tbody class>
-                      <tr class>
-                        <th class></th>
-                        <th class>fields</th>
-                        <th class>name</th>
-                      </tr>
-                      <tr class>
-                        <td class="number">
-                          <span class="number">0</span>
-                        </td>
-                        <td class="tabme-wrapper object">
-                          <div class="json-grid-element-container">
-                            <span class="expander" data-target-id="table-5"> [-] 13 items</span>
-                            <table class="table" id="table-5">
-                              <tbody class>
-                                <tr class>
-                                  <th class></th>
-                                  <th class>bitPos</th>
-                                  <th class>defaultValue</th>
-                                  <th class>enums</th>
-                                  <th class>mnemonic</th>
-                                  <th class>offset</th>
-                                  <th class>resolution</th>
-                                  <th class>size in bits</th>
-                                  <th class>type</th>
-                                  <th class>valueMax</th>
-                                  <th class>valueMin</th>
-                                </tr>
-                                <tr class>
-                                  <td class="number">
-                                    <span class="number">0</span>
-                                  </td>
-                                  <td class="table-wrapper object">
-                                    <span class="number">0</span>
-                                  </td>
-                                  <td class="table-wrapper object">
-                                    <span class="number">0</span>
-                                  </td>
-                                  <td class="table-wrapper object">
-                                    <span class="string">ENABLE_USE</span>
-                                  </td>
-                                  <td class="table-wrapper object">
-                                    <div class="json-grid-element-container">
-                                      <span class="expander" data-target-id="table-10">[-] 4 items </span>
-                                    </div>
-                                  </td>
-                                </tr>
+    <div class="tab">
+      <button class="tablink_up" onclick="openPage(event, 'DID')">DID configuration</button>
+      <button class="tablink_up" onclick="openPage(event, 'MTC')">MTC pretty printer</button>
+    </div>
 
-                              </tbody>
-                            </table>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+    <div id="MTC" class="tabcontent_up" style="display:none">
+      <h1>MTC pretty printer</h1>
 
-              
-            </tr>
-            <tr>
-              <td>0x2002</td>
-              <td></td>
-              <td>311</td>
-              <td>MEX</td>
-              <td></td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2003</td>
-              <td></td>
-              <td>462</td>
-              <td>NAV</td>
-              <td></td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2004</td>
-              <td>
-              </td>
-              <td>307</td>
-              <td>HMI</td>
-              <td></td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2005</td>
-              <td></td>
-              <td>79</td>
-              <td>CONNECTIVITY</td>
-              <td></td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2006</td>
-              <td></td>
-              <td>40</td>
-              <td>DISPLAY</td>
-              <td></td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2007</td>
-              <td></td>
-              <td>161</td>
-              <td>RVC</td>
-              <td>/td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2008</td>
-              <td></td>
-              <td>51</td>
-              <td>MULTIMEDIA</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0xDEF0</td>
-              <td>[object Object]</td>
-              <td>1</td>
-              <td>FACTORY_MODE</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2009</td>
-              <td>[object Object]</td>
-              <td>5</td>
-              <td>LONG_PRESS</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2201</td>
-              <td>[object Object]</td>
-              <td>1</td>
-              <td>ANTITHEFT</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2010</td>
-              <td>[object Object]</td>
-              <td>5</td>
-              <td>VPA</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2011</td>
-              <td>[object Object],[object Object],[object Object],[object Object]</td>
-              <td>121</td>
-              <td>CAMERA_NISSAN</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2012</td>
-              <td>[object Object]</td>
-              <td>213</td>
-              <td>MULTIMEDIA_RADIO_DAB</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2013</td>
-              <td>[object Object]</td>
-              <td>512</td>
-              <td>MULTIMEDIA_RADIO_ANTENNA</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2014</td>
-              <td>[object Object]</td>
-              <td>371</td>
-              <td>MULTIMEDIA_RADIO_FM_AM_TUNER</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2015</td>
-              <td>[object Object]</td>
-              <td>101</td>
-              <td>MULTIMEDIA_RADIO_GENERICTUNER</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2016</td>
-              <td>[object Object]</td>
-              <td>4</td>
-              <td>NISSAN_SYSTEM_INFORMATION</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2017</td>
-              <td></td>
-              <td>87</td>
-              <td>NISSAN_VEHICLE_INFORMATION</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2018</td>
-              <td>[object Object]</td>
-              <td>1</td>
-              <td>TIME_ZONE</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2022</td>
-              <td>[object Object]</td>
-              <td>22</td>
-              <td>USB_ENCRYPTION</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2023</td>
-              <td>[object Object]</td>
-              <td>8</td>
-              <td>DTCMUX_CONFIG</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2024</td>
-              <td>[object Object]</td>
-              <td>32</td>
-              <td>CUSTOM_ASSETS_PACKAGE</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2025</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_CONFIG</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2026</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_1</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2027</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_2</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2028</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_3</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2029</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_4</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2030</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_5</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2031</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_6</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2032</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_7</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2033</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_8</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2034</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_9</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2035</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_10</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2036</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_11</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2037</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_12</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2038</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_13</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2039</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_14</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2040</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_15</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2041</td>
-              <td>[object Object]</td>
-              <td>64</td>
-              <td>CUSTOM_ASSETS_DEPENDENCY_16</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2042</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_1</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2043</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_2</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2044</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_3</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2045</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_4</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2046</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_5</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2047</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_6</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2048</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_7</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2049</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_8</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2050</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_9</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2051</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_10</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2052</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_11</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2053</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_12</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2054</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_13</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2055</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_14</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2056</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_15</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2057</td>
-              <td>[object Object]</td>
-              <td>256</td>
-              <td>CUSTOM_ASSETS_PATCH_16</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2058</td>
-              <td>[object Object]</td>
-              <td>400</td>
-              <td>CUSTOM_ASSETS_PASSWORD</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2059</td>
-              <td>[object Object]</td>
-              <td>2</td>
-              <td>PART_AUTHENTICATION</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2060</td>
-              <td>[object Object]</td>
-              <td>45</td>
-              <td>RVC_PART2</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0xDEFF</td>
-              <td>[object Object]</td>
-              <td>20</td>
-              <td>CONFIGURATION</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2061</td>
-              <td>[object Object]</td>
-              <td>468</td>
-              <td>HOLISTIC_COCKPIT</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2062</td>
-              <td>[object Object],[object Object]</td>
-              <td>178</td>
-              <td>AVM</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2063</td>
-              <td>[object Object]</td>
-              <td>35</td>
-              <td>OMC</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2064</td>
-              <td>[object Object]</td>
-              <td>24</td>
-              <td>MULTIMEDIA_RADIO_DAB_ACCESSDA</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2065</td>
-              <td>[object Object]</td>
-              <td>313</td>
-              <td>MULTIMEDIA_RADIO_FM_AM_TUNER_ACCESS_DA</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2066</td>
-              <td>[object Object]</td>
-              <td>14</td>
-              <td>SAFETYSCORE</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2067</td>
-              <td>[object Object],[object Object]</td>
-              <td>10</td>
-              <td>VPA_2</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2068</td>
-              <td>[object Object],[object Object]</td>
-              <td>156</td>
-              <td>MEX2</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x2069</td>
-              <td></td>
-              <td>54</td>
-              <td>HMI2</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-            <tr>
-              <td>0x206A</td>
-              <td>[object Object]</td>
-              <td>104</td>
-              <td>SYS_INFO2</td>
-              <td>[object Object]</td>
-              <td>3.3.3</td>
-            </tr>
-        </table>
+      <div class="mymtcinputradios" style="border: 1px solid grey">
+        <label>
+          <input type="radio" value="raw" v-model="selected" @change='changeMtcMode' />
+          Enter MTC string in textbox
+        </label>
+        <br>
+        <label>
+          <input type="radio" value="conf" v-model="selected" @change='changeMtcMode' />
+          Select MTC from VC configurations
+        </label>
+      </div>
+      <br>
+      <br>
+
+      <div id="mtc-raw-input" style="display:none">
+        <div id="mtc-raw-form">
+          <form style="width:1000">
+            Raw MTC: <input v-model="raw_mtc" placeholder="Your MTC string" />
+          </form>
+        </div>
+
+        <div id="mtc-submit">
+          <button @click="generateTableLines(mtc_raw.raw_mtc);" type="button">submit</button>
+        </div>
+      </div>
+      <!--
+      <div id="mtc-submit">
+        <button v-on:click="generateTableLines();">submit</button>
+      </div>
+      -->
+
+      <div id="mtc_vc_conf">
+        <div class="myvehicletyperadios" style="border: 1px solid grey">
+          Vehicle Type:
+          <label>
+            <input type="radio" value="XCB" v-model="selected"
+              v-on:change='if (vc_dropdown != null) {vc_dropdown.generateList()}' />
+            XCB
+          </label>
+          <label>
+            <input type="radio" value="XHN" v-model="selected"
+              v-on:change='if (vc_dropdown != null) {vc_dropdown.generateList()}' />
+            XHN
+          </label>
+        </div>
+        <br>
+        <div class="mymilestoneradios" style="border: 1px solid grey">
+          Vehicle production milestone:
+          <label>
+            <input type="radio" value="VC" v-model="selected"
+              v-on:change='if (vc_dropdown != null) {vc_dropdown.generateList()}' />
+            VC
+          </label>
+          <label>
+            <input type="radio" value="PT" v-model="selected"
+              v-on:change='if (vc_dropdown != null) {vc_dropdown.generateList()}' />
+            PT
+          </label>
+        </div>
+        <br>
+        <div >
+          <select >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+        
+      
+          </select> 
+        </div>
+        <div id="mtc_dropdown">
+          <br>
+          <p :on-click='changeConf' :items='confs'> Currently selected conf :</p>
+        </div>
       </div>
 
-      </tr>
-      </tbody>
-      </table>
+      <br></br>
+      <div id="demo">
+        <div id="blank"></div>
+        <form id="search">
+          Search in MTC <input name="query" v-model="searchQuery" />
+        </form>
+        <br>
+        <demo-grid :heroes="gridData" :columns="gridColumns" :filter-key="searchQuery">
+        </demo-grid>
+      </div>
+      <script type="text/javascript" src="mtc_printer.js"></script>
+      <script type="text/javascript" src="./criterias.js"></script>
     </div>
-  </div>
 
+    <div id="DID" class="tabcontent_up" style="display:none">
+      <div class="tab">
+        <button class="tablinks" onclick="openPI(event, 'PI9')">MyF1 (PI9 diag resource v2.6.2)</button>
+        <button class="tablinks" onclick="openPI(event, 'PI11')">MyF2 (PI11 diag resource v2.9.2)</button>
+        <button class="tablinks" onclick="openPI(event, 'PI14')">MyF3 (PI14 diag resource v3.2.4)</button>
+      </div>
 
+      <h1>A-IVI2 Configuration DID list</h1>
+<!-- 
+      <div>
+    <input type="checkbox" id="expand" name="expand"
+     checked>
+    <label for="expand">Expand</label>
+      </div> -->
 
+      <div id="PI9" class="tabcontent" style="display:none">
+      </div>
 
+      <div id="PI11" class="tabcontent" style="display:none">
+      </div>
 
+      <div id="PI14" class="tabcontent" style="display:none">
+      </div>
+    </div>
+  </body>
 
-  </div>
-  </div>
-  </div>
-</body>
-
-</html>
+  </html>
